@@ -1,17 +1,28 @@
 import styled from 'styled-components/macro'
 
 export const MenuItem = styled.div`
-min-width: 30%;
-height: 240px;
-display: flex;
-flex: 1 1 auto;
-justify-content: center;
-align-items: center;
-border: 1px solid #000;
-margin: 0 7.5px 15px;
-background-image: url(${props => props.imageUrl});
-background-size: cover;
-background-position: center;
+  min-width: 30%;
+  height: ${({size}) => (size ? '380px' : '240px')};
+  display: flex;
+  flex: 1 1 auto;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #000;
+  margin: 0 7.5px 15px;
+  overflow: hidden;
+  
+  &:hover {
+  cursor: pointer;
+
+  & .background-image{
+    transform: scale(1.1);
+    transition: transform 6s cubic-bezier(0.25, 0.45, 0.45, 0.95);
+  }
+
+  & .content {
+    opacity: 0.9;
+  }
+}
 
 &:first-child {
     margin-right: 7.5px;
@@ -20,7 +31,16 @@ background-position: center;
   &:last-child {
     margin-left: 7.5px;
   }
+
 `
+export const BackgroundImageContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-image: url(${({imageUrl}) => imageUrl});
+`;
+
 export const Content = styled.div`
 height: 90px;
 padding: 0 25px;
@@ -29,6 +49,9 @@ flex-direction: column;
 align-items: center;
 justify-content: center;
 border: 1px solid black;
+background-color: white;
+opacity: 0.7;
+position: absolute;
 `
 export const Title = styled.h1`
 font-weight: bold;
