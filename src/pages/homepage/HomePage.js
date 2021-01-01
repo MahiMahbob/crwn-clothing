@@ -1,5 +1,6 @@
 import React from 'react'
-import DirectoryComponents from '../components/directory/DirectoryComponents'
+import DirectoryComponents from '../../components/directory/DirectoryComponents'
+
 import { HomePageContainer } from './HomePageStyle'
 
 const HomePage = () => {
