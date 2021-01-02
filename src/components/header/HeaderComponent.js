@@ -11,6 +11,7 @@ const HeaderComponent = () => {
             <OptionsContainer>
                 <OptionLink to='/shop'>Shop</OptionLink>
                 <OptionLink to='/contact'>Contact</OptionLink>
+                <OptionLink to='/signin'>Sign In</OptionLink>
             </OptionsContainer>
         </HeaderContainer>
     )
