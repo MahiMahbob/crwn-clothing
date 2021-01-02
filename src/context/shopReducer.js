@@ -1,9 +1,10 @@
 const shopReducer = (state, action) => {
-    switch ('key') {
-        case 'value':
-            
-            break;
-    
+    switch (action.type) {
+        case 'SET_USER':
+            return {
+                ...state,
+                currentUser: action.payload
+            }
         default:
             break;
     }

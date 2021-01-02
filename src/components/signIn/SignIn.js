@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
+import { signInWithGoogle } from '../../firebase/firebaseUtils'
 import CustomButton from '../customButton/CustomButton'
 import FormInput from '../formInput/FormInput'
-import { SignInContainer, SignInTitle } from './SignInStyles'
+import { SignInContainer, SignInTitle,ButtonsBarContainer } from './SignInStyles'
 
 const SignIn = () => {
 
@@ -16,7 +17,7 @@ const SignIn = () => {
     }
 
     const { email, password } = inputVal
-    
+
     return (
         <SignInContainer>
             <SignInTitle>I already have an account</SignInTitle>
@@ -39,7 +40,10 @@ const SignIn = () => {
                     handleChange={handleChange}
                     required
                 />
-                <CustomButton type='submit'>Sign In</CustomButton>
+                <ButtonsBarContainer>
+                    <CustomButton type='submit'>Sign In</CustomButton>
+                    <CustomButton isGoogleSignIn onClick={signInWithGoogle}>Sign In with google</CustomButton>
+                </ButtonsBarContainer>
             </form>
         </SignInContainer>
     )

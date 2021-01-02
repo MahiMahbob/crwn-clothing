@@ -6,7 +6,7 @@ import ShopPage from './pages/shopPage/ShopPage';
 import SignInSignUp from './pages/signInSignUp/SignInSignUp';
 
 function App() {
-
+  
   return (
     <div className="App">
       <HeaderComponent />
