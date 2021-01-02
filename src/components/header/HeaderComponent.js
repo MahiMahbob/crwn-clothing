@@ -6,7 +6,6 @@ import { HeaderContainer, LogoContainer, OptionsContainer, OptionLink } from './
 
 const HeaderComponent = () => {
     const { currentUser } = useContextValue()
-    console.log(currentUser);
     return (
         <HeaderContainer>
             <LogoContainer to='/'>
