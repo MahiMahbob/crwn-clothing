@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState} from 'react'
 import { auth, signInWithGoogle } from '../../firebase/firebaseUtils'
 import CustomButton from '../customButton/CustomButton'
 import FormInput from '../formInput/FormInput'
@@ -10,8 +10,9 @@ const SignIn = () => {
         email: '',
         password: ''
     })
-    const [error, setError] = useState(null)
 
+    const [error, setError] = useState(null)
+    
     const { email, password } = inputVal
 
     const handleChange = e => {
@@ -23,10 +24,10 @@ const SignIn = () => {
         e.preventDefault()
 
         try{
+            setError('');
             await auth.signInWithEmailAndPassword(email, password)
-            setInputVal({email: '', password: ''})
         }catch (err){
-            setError('err');
+            setError(err.message);
         }
 
     }
@@ -55,7 +56,7 @@ const SignIn = () => {
                 />
                 <ButtonsBarContainer>
                     <CustomButton type='submit'>Sign In</CustomButton>
-                    <CustomButton isGoogleSignIn onClick={signInWithGoogle}>Sign In with google</CustomButton>
+                    <CustomButton as='div' onClick={signInWithGoogle} isGoogleSignIn>Sign In with google</CustomButton>
                 </ButtonsBarContainer>
             </form>
         </SignInContainer>

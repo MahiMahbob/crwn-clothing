@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { auth, createUserProfileDocument } from '../../firebase/firebaseUtils'
+import { useContextValue } from '../../context/shopContext'
 import CustomButton from '../customButton/CustomButton'
 import FormInput from '../formInput/FormInput'
 import { SignUpContainer, SignUpTitle } from './SignUpstyles'
@@ -12,8 +12,8 @@ const SignUp = () => {
         password: '',
         confirmPassword: '',
     })
-
-    const { displayName, email, password, confirmPassword } = inputVal
+    const {signup} = useContextValue()
+    const { displayName,email, password, confirmPassword } = inputVal
 
     const handleChange = event => {
         const { name, value} = event.target;
@@ -29,16 +29,7 @@ const SignUp = () => {
         }
 
         try {
-            const { user } = await auth.createUserWithEmailAndPassword(email, password)
-
-            await createUserProfileDocument(user, { displayName })
-
-            setInputVal({
-                displayName: '',
-                email: '',
-                password: '',
-                confirmPassword: ''
-            })
+            await signup(email,password,displayName)
         } catch (err) {
             console.log(err);
         }
@@ -54,7 +45,7 @@ const SignUp = () => {
                     name='displayName'
                     value={displayName}
                     handleChange={handleChange}
-                    label='Display Name'
+                    label='displayName'
                     required
                 />
                 <FormInput

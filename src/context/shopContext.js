@@ -14,10 +14,19 @@ export const ShopContextProvider = ({ children }) => {
     
     const [state, dispatch] = useReducer(shopReducer, initialState)
 
+    const signup = (email,password,displayName) => {
+        auth.createUserWithEmailAndPassword(email, password)
+        .then((result) => {
+            return result.user.updateProfile({
+                displayName
+            })
+        })
+    }
+
     useEffect(() => {
-        const unsubs = auth.onAuthStateChanged(async userAuth => {
-            if(userAuth){
-                const userRef = await createUserProfileDocument(userAuth)
+        const unsubs = auth.onAuthStateChanged(async user => {
+            if(user){
+                const userRef = await createUserProfileDocument(user)
 
                 userRef.onSnapshot(snapshot => {
                     dispatch({type: 'SET_USER', payload: {id: snapshot.id, ...snapshot.data() }})
@@ -26,7 +35,7 @@ export const ShopContextProvider = ({ children }) => {
             }
             
             else {
-                dispatch({type: 'SET_USER', payload: userAuth})
+                dispatch({type: 'SET_USER', payload: user})
             }
         })
 
@@ -37,7 +46,8 @@ export const ShopContextProvider = ({ children }) => {
 
     const value = {
         shopData: state.shopData,
-        currentUser: state.currentUser
+        currentUser: state.currentUser,
+        signup
     }
 
     return (
