@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { signInWithGoogle } from '../../firebase/firebaseUtils'
+import { auth, signInWithGoogle } from '../../firebase/firebaseUtils'
 import CustomButton from '../customButton/CustomButton'
 import FormInput from '../formInput/FormInput'
 import { SignInContainer, SignInTitle,ButtonsBarContainer } from './SignInStyles'
@@ -10,20 +10,33 @@ const SignIn = () => {
         email: '',
         password: ''
     })
+    const [error, setError] = useState(null)
+
+    const { email, password } = inputVal
 
     const handleChange = e => {
         const { name, value } = e.target
-        setInputVal({ [name]: value })
+        setInputVal({...inputVal, [name]: value })
     }
 
-    const { email, password } = inputVal
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+
+        try{
+            await auth.signInWithEmailAndPassword(email, password)
+            setInputVal({email: '', password: ''})
+        }catch (err){
+            setError('err');
+        }
+
+    }
 
     return (
         <SignInContainer>
             <SignInTitle>I already have an account</SignInTitle>
             <span>Sign in with your email and password</span>
-
-            <form>
+            {error && <h3>{error}</h3>}
+            <form onSubmit={handleSubmit}>
                 <FormInput
                     name='email'
                     type='email'
