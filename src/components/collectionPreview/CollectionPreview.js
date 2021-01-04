@@ -7,8 +7,8 @@ const CollectionPreview = ({ title, items }) => {
         <CollectionPrevContainer>
             <Title>{title.toUpperCase()}</Title>
             <Preview>
-                {items.filter((item, indx) => indx < 4).map(({id, ...otherProps}) => (
-                    <CollectionPrevItem key={id} {...otherProps} />
+                {items.filter((item, indx) => indx < 4).map((item) => (
+                    <CollectionPrevItem key={item.id} item={item} />
                 ))}
             </Preview>
         </CollectionPrevContainer>

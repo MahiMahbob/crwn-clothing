@@ -10,6 +10,11 @@ const shopReducer = (state, action) => {
                 ...state,
                 isOpen: !state.isOpen
             }
+        case 'ADD_ITEM':
+            return {
+                ...state,
+                cartItem: [action.payload, ...state.cartItem]
+            }
         default:
             break;
     }

@@ -5,6 +5,7 @@ import shopReducer from './shopReducer'
 
 const initialState = {
     shopData: SHOP_DATA,
+    cartItem: [],
     currentUser: null,
     isOpen: true
 }
@@ -28,6 +29,10 @@ export const ShopContextProvider = ({ children }) => {
         dispatch({type: 'HIDE_DROPDOWN'})
     }
 
+    const addItem = (item) => {
+        dispatch({type: 'ADD_ITEM', payload: item})
+    }
+
     useEffect(() => {
         const unsubs = auth.onAuthStateChanged(async user => {
             if(user){
@@ -49,14 +54,16 @@ export const ShopContextProvider = ({ children }) => {
         }
     }, [])
 
-    const {shopData,currentUser, isOpen} = state
+    const {shopData,currentUser, isOpen,cartItem} = state
 
     const value = {
         shopData,
         currentUser,
         signup,
         isOpen,
-        hideCartDropDown
+        hideCartDropDown,
+        addItem,
+        cartItem
     }
 
     return (
