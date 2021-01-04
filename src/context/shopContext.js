@@ -5,7 +5,8 @@ import shopReducer from './shopReducer'
 
 const initialState = {
     shopData: SHOP_DATA,
-    currentUser: null
+    currentUser: null,
+    isOpen: true
 }
 
 const GlobalContext = React.createContext(initialState)
@@ -21,6 +22,10 @@ export const ShopContextProvider = ({ children }) => {
                 displayName
             })
         })
+    }
+
+    const hideCartDropDown = () => {
+        dispatch({type: 'HIDE_DROPDOWN'})
     }
 
     useEffect(() => {
@@ -44,10 +49,14 @@ export const ShopContextProvider = ({ children }) => {
         }
     }, [])
 
+    const {shopData,currentUser, isOpen} = state
+
     const value = {
-        shopData: state.shopData,
-        currentUser: state.currentUser,
-        signup
+        shopData,
+        currentUser,
+        signup,
+        isOpen,
+        hideCartDropDown
     }
 
     return (

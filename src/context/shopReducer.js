@@ -5,6 +5,11 @@ const shopReducer = (state, action) => {
                 ...state,
                 currentUser: action.payload
             }
+        case 'HIDE_DROPDOWN':
+            return {
+                ...state,
+                isOpen: !state.isOpen
+            }
         default:
             break;
     }
