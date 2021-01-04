@@ -18,6 +18,10 @@ export const CartDropDwn = styled.div`
 export const CartDropdownButton = styled(CustomButton)`
   margin-top: auto;
 `
+export const EmptyMessageContainer = styled.span`
+  font-size: 18px;
+  margin: 50px auto;
+`
 
 export const CartItems = styled.div`
     height: 240px;
@@ -25,5 +29,4 @@ export const CartItems = styled.div`
     flex-direction: column;
     overflow: scroll;
     overflow-x: hidden;
-    overflow-y: hidden;
 `
