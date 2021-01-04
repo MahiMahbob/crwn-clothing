@@ -1,3 +1,5 @@
+import { addItemToCart } from "./shopUtils";
+
 const shopReducer = (state, action) => {
     switch (action.type) {
         case 'SET_USER':
@@ -13,7 +15,7 @@ const shopReducer = (state, action) => {
         case 'ADD_ITEM':
             return {
                 ...state,
-                cartItem: [action.payload, ...state.cartItem]
+                cartItem: addItemToCart(state.cartItem, action.payload)
             }
         default:
             break;
