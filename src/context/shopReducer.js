@@ -17,6 +17,13 @@ const shopReducer = (state, action) => {
                 ...state,
                 cartItem: addItemToCart(state.cartItem, action.payload)
             }
+        case 'SET_TOTAL':
+            return {
+                ...state,
+                total: state.cartItem.map(item => item.quantity).reduce((total, quantity) => total += quantity,0)
+                
+            }
+            
         default:
             break;
     }

@@ -7,54 +7,56 @@ const initialState = {
     shopData: SHOP_DATA,
     cartItem: [],
     currentUser: null,
-    isOpen: true
+    isOpen: true,
+    total: 0
 }
 
 const GlobalContext = React.createContext(initialState)
 
 export const ShopContextProvider = ({ children }) => {
-    
+
     const [state, dispatch] = useReducer(shopReducer, initialState)
 
-    const signup = (email,password,displayName) => {
+    const { shopData, currentUser, isOpen, cartItem, total } = state
+
+    const signup = (email, password, displayName) => {
         auth.createUserWithEmailAndPassword(email, password)
-        .then((result) => {
-            return result.user.updateProfile({
-                displayName
+            .then((result) => {
+                return result.user.updateProfile({
+                    displayName
+                })
             })
-        })
     }
 
     const hideCartDropDown = () => {
-        dispatch({type: 'HIDE_DROPDOWN'})
+        dispatch({ type: 'HIDE_DROPDOWN' })
     }
 
     const addItem = (item) => {
-        dispatch({type: 'ADD_ITEM', payload: item})
+        dispatch({ type: 'ADD_ITEM', payload: item })
     }
 
     useEffect(() => {
         const unsubs = auth.onAuthStateChanged(async user => {
-            if(user){
+            if (user) {
                 const userRef = await createUserProfileDocument(user)
-
                 userRef.onSnapshot(snapshot => {
-                    dispatch({type: 'SET_USER', payload: {id: snapshot.id, ...snapshot.data() }})
+                    dispatch({ type: 'SET_USER', payload: { id: snapshot.id, ...snapshot.data() } })
                 })
-                
             }
-            
             else {
-                dispatch({type: 'SET_USER', payload: user})
+                dispatch({ type: 'SET_USER', payload: user })
             }
         })
-
         return () => {
             unsubs()
         }
     }, [])
 
-    const {shopData,currentUser, isOpen,cartItem} = state
+    useEffect(() => {
+        dispatch({ type: 'SET_TOTAL' })
+
+    }, [cartItem])
 
     const value = {
         shopData,
@@ -63,7 +65,8 @@ export const ShopContextProvider = ({ children }) => {
         isOpen,
         hideCartDropDown,
         addItem,
-        cartItem
+        cartItem,
+        total
     }
 
     return (
