@@ -1,4 +1,4 @@
-import { addItemToCart } from "./shopUtils";
+import { addItemToCart, ItemRemovesFromCart } from "./shopUtils";
 
 const shopReducer = (state, action) => {
     switch (action.type) {
@@ -17,13 +17,22 @@ const shopReducer = (state, action) => {
                 ...state,
                 cartItem: addItemToCart(state.cartItem, action.payload)
             }
-        case 'SET_TOTAL':
+        case 'REMOVE_ITEM':
             return {
                 ...state,
-                total: state.cartItem.map(item => item.quantity).reduce((total, quantity) => total += quantity,0)
-                
+                cartItem: ItemRemovesFromCart(state.cartItem, action.payload)
             }
-            
+        case 'CLEAR_ITEM':
+            return {
+                ...state,
+                cartItem: state.cartItem.filter(crtItem => crtItem.id !== action.payload.id)
+            }
+        case 'SET_AMOUNT':
+            return {
+                ...state,
+                amountCount: state.cartItem.map(item => item.quantity).reduce((total, quantity) => total += quantity,0),
+                total: state.cartItem.reduce((total, current) => total + current.quantity * current.price,0)
+            } 
         default:
             break;
     }

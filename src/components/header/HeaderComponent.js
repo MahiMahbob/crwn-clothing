@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react'
-import { Redirect } from 'react-router-dom'
+import React from 'react'
 import { ReactComponent as Logo } from '../../assets/logo.svg'
 import { useContextValue } from '../../context/shopContext'
 import { auth } from '../../firebase/firebaseUtils'
@@ -8,18 +7,7 @@ import CartIcon from '../cartIcon/CartIcon'
 import { HeaderContainer, LogoContainer, OptionsContainer, OptionLink } from './HeaderStyle'
 
 const HeaderComponent = () => {
-    const { currentUser } = useContextValue()
-    const [redirect, setredirect] = useState(null)
-    const {isOpen} = useContextValue()
-
-    useEffect(() => {
-        if (currentUser) {
-          setredirect('/shop')
-        }
-      }, [currentUser])
-      if (redirect) {
-        <Redirect to={redirect}/>
-      }
+    const { currentUser,isOpen } = useContextValue()
 
     return (
         <HeaderContainer>
@@ -34,7 +22,7 @@ const HeaderComponent = () => {
                 }
                 <CartIcon/>
             </OptionsContainer>
-            {isOpen ? null : <CartDropdown />}
+            {isOpen ? <CartDropdown /> : null}
         </HeaderContainer>
     )
 }

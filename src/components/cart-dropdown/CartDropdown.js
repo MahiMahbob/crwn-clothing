@@ -1,10 +1,19 @@
 import React from 'react'
+import { useHistory } from 'react-router-dom'
 import { useContextValue } from '../../context/shopContext'
 import CartItem from '../cart-item/CartItem'
 import { CartDropDwn, CartItems, CartDropdownButton, EmptyMessageContainer } from './CartDrpDwnStyles'
 
 const CartDropdown = () => {
-    const { cartItem } = useContextValue()
+    const { cartItem,hideDropDown } = useContextValue()
+    const history = useHistory()
+
+    const handleClick = () => {
+        history.push('/checkout')
+
+        hideDropDown()
+    }
+    
     return (
         <CartDropDwn>
             <CartItems>
@@ -13,7 +22,7 @@ const CartDropdown = () => {
                     <EmptyMessageContainer>Your cart is empty</EmptyMessageContainer>
                 }
             </CartItems>
-            <CartDropdownButton>GO TO CHECKOUT</CartDropdownButton>
+            <CartDropdownButton onClick={handleClick}>GO TO CHECKOUT</CartDropdownButton>
         </CartDropDwn>
     )
 }

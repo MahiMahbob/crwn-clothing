@@ -1,13 +1,16 @@
 import React, { useContext, useReducer, useEffect } from 'react'
 import { auth, createUserProfileDocument } from '../firebase/firebaseUtils'
 import SHOP_DATA from '../pages/shopPage/shopData'
+import { SECTION_DATA } from './sectionData'
 import shopReducer from './shopReducer'
 
 const initialState = {
     shopData: SHOP_DATA,
+    sections: SECTION_DATA,
     cartItem: [],
     currentUser: null,
-    isOpen: true,
+    isOpen: false,
+    amountCount: 0,
     total: 0
 }
 
@@ -17,7 +20,7 @@ export const ShopContextProvider = ({ children }) => {
 
     const [state, dispatch] = useReducer(shopReducer, initialState)
 
-    const { shopData, currentUser, isOpen, cartItem, total } = state
+    const { shopData, sections, currentUser, isOpen, cartItem, amountCount,total } = state
 
     const signup = (email, password, displayName) => {
         auth.createUserWithEmailAndPassword(email, password)
@@ -31,9 +34,18 @@ export const ShopContextProvider = ({ children }) => {
     const hideCartDropDown = () => {
         dispatch({ type: 'HIDE_DROPDOWN' })
     }
-
+    
+    const hideDropDown = () => {
+        dispatch({ type: 'HIDE_DROPDOWN' })
+    }
     const addItem = (item) => {
         dispatch({ type: 'ADD_ITEM', payload: item })
+    }
+    const removeItem = (item) => {
+        dispatch({ type: 'REMOVE_ITEM', payload: item })
+    }
+    const clearItem = (item) => {
+        dispatch({ type: 'CLEAR_ITEM', payload: item })
     }
 
     useEffect(() => {
@@ -54,18 +66,22 @@ export const ShopContextProvider = ({ children }) => {
     }, [])
 
     useEffect(() => {
-        dispatch({ type: 'SET_TOTAL' })
-
+        dispatch({ type: 'SET_AMOUNT' })
     }, [cartItem])
 
     const value = {
         shopData,
+        sections,
         currentUser,
         signup,
         isOpen,
         hideCartDropDown,
-        addItem,
         cartItem,
+        addItem,
+        removeItem,
+        clearItem,
+        amountCount,
+        hideDropDown,
         total
     }
 

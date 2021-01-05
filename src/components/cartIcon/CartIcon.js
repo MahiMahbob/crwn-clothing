@@ -3,11 +3,11 @@ import { useContextValue } from '../../context/shopContext'
 import { CartContainer, ItemCountContainer, ShoppingIcon } from './CartIconStyles'
 
 const CartIcon = () => {
-    const {hideCartDropDown, total} = useContextValue()
+    const {hideCartDropDown, amountCount} = useContextValue()
     return (
         <CartContainer onClick={hideCartDropDown}>
             <ShoppingIcon/>
-            <ItemCountContainer>{total}</ItemCountContainer>
+            <ItemCountContainer>{amountCount}</ItemCountContainer>
         </CartContainer>
     )
 }
