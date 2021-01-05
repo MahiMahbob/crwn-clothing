@@ -7,7 +7,7 @@ import shopReducer from './shopReducer'
 const initialState = {
     shopData: SHOP_DATA,
     sections: SECTION_DATA,
-    cartItem: [],
+    cartItem: JSON.parse(sessionStorage.getItem('cartItems')) || [],
     currentUser: null,
     isOpen: false,
     amountCount: 0,
@@ -19,8 +19,9 @@ const GlobalContext = React.createContext(initialState)
 export const ShopContextProvider = ({ children }) => {
 
     const [state, dispatch] = useReducer(shopReducer, initialState)
-
     const { shopData, sections, currentUser, isOpen, cartItem, amountCount,total } = state
+
+    sessionStorage.setItem('cartItems', JSON.stringify(cartItem))
 
     const signup = (email, password, displayName) => {
         auth.createUserWithEmailAndPassword(email, password)

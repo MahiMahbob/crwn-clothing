@@ -17,7 +17,7 @@ const CheckOutItem = ({ crtItem }) => {
                 <div onClick={() => addItem(crtItem)}>&#10095;</div>
             </QuantityContainer>
             <TextContainer>{price}</TextContainer>
-            <RemoveButtonContainer onClick={() => clearItem(crtItem)}>
+            <RemoveButtonContainer onClick={() => window.confirm("Are you sure you wish to remove?") && clearItem(crtItem)}>
                 &#10005;
             </RemoveButtonContainer>
         </CheckoutItemContainer>
