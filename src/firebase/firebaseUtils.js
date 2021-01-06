@@ -39,6 +39,25 @@ export const createUserProfileDocument = async(user) => {
     return userRef;
 }
 
+export const collectionSnapToMap = (snap) => {
+    const snapData = snap.docs.map(doc => {
+      const {title, items} = doc.data()
+      
+      return {
+        id: doc.id,
+        routeName: encodeURI(title.toLowerCase()),
+        title,
+        items
+      }
+    })
+
+    return snapData.reduce((newObj, collection) => {
+      // collection theke title ar collection jemon mens = mens er collection, 
+      newObj[collection.title.toLowerCase()] = collection
+      return newObj
+    },{})
+}
+
 const provider = new firebase.auth.GoogleAuthProvider();
 provider.setCustomParameters({ prompt: 'select_account' });
 

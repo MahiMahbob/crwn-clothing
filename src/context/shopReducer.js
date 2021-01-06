@@ -12,6 +12,12 @@ const shopReducer = (state, action) => {
                 ...state,
                 isOpen: !state.isOpen
             }
+        case 'UPDATE_SHOPDATA':
+            return {
+                ...state,
+                shopData: action.payload,
+                loading: false
+            }
         case 'ADD_ITEM':
             return {
                 ...state,
