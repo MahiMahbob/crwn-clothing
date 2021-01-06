@@ -70,6 +70,21 @@ export const ShopContextProvider = ({ children }) => {
         dispatch({ type: 'SET_AMOUNT' })
     }, [cartItem])
 
+    // useEffect(() => {
+    //     const objData = Object.keys(shopData).map(key => shopData[key]).map(({title,items}) => ({title,items}))
+    //     const shopDataToFirestore = (key, objToAdd) => {
+    //         const shopCollectionRef = firestore.collection(key)
+
+    //         const batch = firestore.batch()
+    //         objToAdd.forEach(obj => {
+    //             const docRef = shopCollectionRef.doc()
+    //             batch.set(docRef,obj)
+    //         })
+    //         batch.commit()
+    //     }
+    //     shopDataToFirestore('collections', objData)
+    // },[shopData])
+
     const value = {
         shopData,
         sections,
