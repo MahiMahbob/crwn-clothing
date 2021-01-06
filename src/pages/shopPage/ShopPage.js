@@ -1,16 +1,13 @@
 import React from 'react'
-import CollectionPreview from '../../components/collectionPreview/CollectionPreview'
-import { useContextValue } from '../../context/shopContext'
+import { Route } from 'react-router-dom'
+import CollectionOverview from '../../components/collection-overview/CollectionOverview'
+import HomeCollection from '../collection/HomeCollection'
 
-const ShopPage = () => {
-
-    const {shopData} = useContextValue()
-
+const ShopPage = ({match}) => {
     return (
         <div className='shop-page'>
-            {shopData.map(({id, ...items}) => (
-                <CollectionPreview key={id} {...items} />
-            ))}
+            <Route exact path={match.path} component={CollectionOverview} />
+            <Route path={`${match.path}/:collectionId`} component={HomeCollection} />
         </div>
     )
 }
